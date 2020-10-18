@@ -1,0 +1,10 @@
+------------------------------------------//---------------------------------------------
+-- vista (cantidad de prestamos por fecha)
+------------------------------------------//---------------------------------------------
+
+CREATE OR REPLACE FORCE VIEW  "PRESTAMOS_X_DIA" ("FECHA_SALIDA", "PRESTAMOS") AS 
+  SELECT
+   fecha_salida, COUNT(cod_prestamo) as prestamos
+FROM
+   PRESTAMO
+   GROUP BY fecha_salida;
