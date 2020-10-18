@@ -1,0 +1,62 @@
+------------------------------------------//---------------------------------------------
+-- Trigger para la tabla objeto
+------------------------------------------//---------------------------------------------
+
+CREATE OR REPLACE TRIGGER  "AU_OBJETO" 
+AFTER INSERT OR UPDATE OR DELETE ON OBJETO
+FOR EACH ROW
+BEGIN
+  IF INSERTING THEN
+      INSERT INTO AUDI_OBJETO VALUES(:NEW.cod_objeto,null,:NEW.nom_objeto,null,:NEW.descr_objeto,null,:NEW.cod_t_objeto,sysdate,'I');
+  END IF;
+  
+  IF UPDATING THEN
+      INSERT INTO AUDI_OBJETO VALUES(:NEW.cod_objeto,:OLD.nom_objeto,:NEW.nom_objeto,:OLD.descr_objeto,:NEW.descr_objeto,:OLD.cod_t_objeto,:NEW.cod_t_objeto,sysdate,'U');
+  END IF;
+
+  IF DELETING THEN
+      INSERT INTO AUDI_OBJETO VALUES(:OLD.cod_objeto,:OLD.nom_objeto,null,:OLD.descr_objeto,null,:OLD.cod_t_objeto,null,sysdate,'D');
+  END IF;
+END;
+
+------------------------------------------//---------------------------------------------
+-- Trigger para la tabla prestador
+------------------------------------------//---------------------------------------------
+
+CREATE OR REPLACE TRIGGER  "AU_PRESTADOR" 
+AFTER INSERT OR UPDATE OR DELETE ON PRESTADOR
+FOR EACH ROW
+BEGIN
+  IF INSERTING THEN
+     INSERT INTO AUDI_PRESTADOR VALUES(:NEW.cod_prestador, null, :NEW.nom_prestador,sysdate,'I');
+  END IF;
+
+  IF UPDATING THEN
+     INSERT INTO AUDI_PRESTADOR VALUES(:NEW.cod_prestador,:OLD.nom_prestador,:NEW.nom_prestador,sysdate,'U');
+  END IF;
+
+  IF DELETING THEN
+     INSERT INTO AUDI_PRESTADOR VALUES(:OLD.cod_prestador,:OLD.nom_prestador,null,sysdate,'D');
+  END IF;
+END;
+
+------------------------------------------//---------------------------------------------
+-- Trigger para la tabla reserva
+------------------------------------------//---------------------------------------------
+
+CREATE OR REPLACE TRIGGER  "AU_RESERVA" 
+AFTER INSERT OR UPDATE OR DELETE ON RESERVA
+FOR EACH ROW
+BEGIN
+  IF INSERTING THEN
+    INSERT INTO AUDI_RESERVA VALUES(:NEW.cod_reserva, :OLD.cod_prestamo, :NEW.cod_prestamo,:OLD.fecha_reserva,:NEW.fecha_reserva,'I');
+  END IF;
+
+  IF UPDATING THEN
+    INSERT INTO AUDI_RESERVA VALUES(:NEW.cod_reserva, null, :NEW.cod_prestamo,null,:NEW.fecha_reserva,'U');
+  END IF;
+
+  IF DELETING THEN
+    INSERT INTO AUDI_RESERVA VALUES(:OLD.cod_reserva, :OLD.cod_prestamo, null,:OLD.fecha_reserva,null,'D');
+  END IF;
+END;
