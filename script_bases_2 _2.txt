@@ -1,0 +1,118 @@
+
+CREATE TABLE CARRERA(
+  cod_carrera INTEGER PRIMARY KEY,
+  nom_carrera VARCHAR(40)
+);
+
+CREATE TABLE ESTUDIANTE(
+  cod_estudiante INTEGER PRIMARY KEY,
+  nom_estudiante VARCHAR(60),
+  password VARCHAR(100), 
+  cod_carrera INTEGER,
+  correo VARCHAR(40)
+);
+
+CREATE TABLE RESERVA (
+cod_reserva INTEGER PRIMARY KEY,
+cod_prestamo INTEGER,
+fecha_reserva DATE
+);
+CREATE TABLE TIPO_PRESTAMO(
+ cod_t_prestamo  INTEGER PRIMARY KEY,
+ nom_t_prestamo  VARCHAR(35)
+);
+
+CREATE TABLE PRESTADOR(
+  cod_prestador INTEGER PRIMARY KEY,
+  nom_prestador VARCHAR(60)
+);
+
+CREATE TABLE TIPO_OBJETO(
+  cod_t_objeto INTEGER PRIMARY KEY,
+  nom_t_objeto VARCHAR(30)
+);
+
+CREATE TABLE OBJETO(
+  cod_objeto INTEGER PRIMARY KEY,
+  nom_objeto VARCHAR(40),
+  descr_objeto VARCHAR(256),
+  cod_t_objeto INTEGER
+);
+
+CREATE TABLE PRESTAMO(
+  cod_prestamo INTEGER PRIMARY KEY,
+  cod_estudiante INTEGER,
+  cod_prestador INTEGER,
+  cod_t_prestamo INTEGER, 
+  cod_objeto INTEGER,
+  fecha_salida DATE,
+  hora_salida TIMESTAMP,
+  fecha_entrada DATE,
+  hora_entrada TIMESTAMP
+);
+
+
+
+---------------------------------------------//-----------------------------------
+--INTEGRIDAD REFERENCIAL
+---------------------------------------------//-----------------------------------
+
+ALTER TABLE ESTUDIANTE
+ADD CONSTRAINT ESTUDIANTE_CARRERA_FK FOREIGN KEY(cod_carrera)
+REFERENCES CARRERA(cod_carrera);
+
+
+
+ALTER TABLE OBJETO
+ADD CONSTRAINT OBJETO_TIPO_OBJETO_FK FOREIGN KEY(cod_t_objeto)
+REFERENCES TIPO_OBJETO(cod_t_objeto);
+
+ALTER TABLE PRESTAMO
+ADD CONSTRAINT PRESTAMO_ESTUDIANTE_FK FOREIGN KEY(cod_estudiante)
+REFERENCES ESTUDIANTE(cod_estudiante);
+
+ALTER TABLE PRESTAMO
+ADD CONSTRAINT PRESTAMO_PRESTADOR_FK FOREIGN KEY(cod_prestador)
+REFERENCES PRESTADOR(cod_prestador);
+
+ALTER TABLE PRESTAMO
+ADD CONSTRAINT PRESTAMO_OBJETO_FK FOREIGN KEY(cod_objeto)
+REFERENCES OBJETO(cod_objeto);
+
+ALTER TABLE PRESTAMO
+ADD CONSTRAINT PRESTAMO_TIPO_FK FOREIGN KEY(cod_t_prestamo)
+REFERENCES TIPO_PRESTAMO(cod_t_prestamo);
+ALTER TABLE RESERVA
+ADD CONSTRAINT RESERVA_FK FOREIGN KEY(cod_prestamo)
+REFERENCES PRESTAMO(cod_prestamo);
+
+
+
+
+
+---------------------------------------------//-----------------------------------
+--CREACION DE TABLAS DE AUDITORIA
+---------------------------------------------//-----------------------------------
+
+CREATE TABLE AUDI_OBJETO(
+  cod_objeto INTEGER,
+  nom_objeto_antiguo VARCHAR(40),
+  nom_objeto_nuevo VARCHAR(40),
+  descr_objeto_antiguo VARCHAR(256),
+  descr_objeto_nuevo VARCHAR(256),
+  cod_t_objeto_antiguo INTEGER,
+  cod_t_objeto_nuevo INTEGER,
+  fecha_objeto DATE
+);
+
+CREATE TABLE AUDI_PRESTADOR(
+  cod_prestador INTEGER,
+  nom_prestador_antiguo VARCHAR(60),
+  nom_prestador_nuevo VARCHAR(60),
+  fecha_prestador DATE
+);
+
+
+---------------------------------------------//-----------------------------------
+--TRIGGERS
+---------------------------------------------//-----------------------------------
