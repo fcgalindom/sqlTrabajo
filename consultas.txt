@@ -1,0 +1,9 @@
+------------------------------------------//---------------------------------------------
+-- cantidad de prestamos por fecha
+------------------------------------------//---------------------------------------------
+
+SELECT
+   fecha_salida, COUNT(cod_prestamo)
+FROM
+   PRESTAMO
+   GROUP BY fecha_salida;
