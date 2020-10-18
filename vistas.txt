@@ -8,3 +8,16 @@ CREATE OR REPLACE FORCE VIEW  "PRESTAMOS_X_DIA" ("FECHA_SALIDA", "PRESTAMOS") AS
 FROM
    PRESTAMO
    GROUP BY fecha_salida;
+
+------------------------------------------//---------------------------------------------
+-- vista (cantidad de prestamos por objeto)
+------------------------------------------//---------------------------------------------
+
+create or replace view "PRESTAMO_X_OBJETO" as
+SELECT
+   nom_objeto, COUNT(cod_prestamo) as cantidad
+FROM
+  PRESTAMO, OBJETO
+WHERE
+   PRESTAMO.cod_objeto = OBJETO.cod_objeto
+   GROUP BY nom_objeto
