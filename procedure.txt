@@ -1,0 +1,19 @@
+---------------------------------------------------------//---------------------------------------------------------------------
+-- Cascara de procedure para recuperar datos
+---------------------------------------------------------//---------------------------------------------------------------------
+
+create or replace PROCEDURE RECUPERAR
+    IS
+       CURSOR HIST
+    IS
+  SELECT
+    cod_prueba, nom_prueba_antiguo, tipo
+  FROM
+    AUDI_PRUEBA;
+BEGIN
+  FOR REGISTRO IN HIST LOOP
+     IF REGISTRO.tipo = 'D' THEN
+       INSERT INTO PRUEBA VALUES(REGISTRO.cod_prueba, REGISTRO.nom_prueba_antiguo);
+     END IF;
+  END LOOP;
+END;​
