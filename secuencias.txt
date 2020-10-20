@@ -1,0 +1,75 @@
+------------------------------------------//---------------------------------------------
+-- trigger para objeto_insert
+------------------------------------------//---------------------------------------------
+
+CREATE TRIGGER  OBEJETOInsert
+BEFORE INSERT ON OBJETO
+FOR EACH ROW
+BEGIN
+ SELECT SECUENCIA_OBJETO.NEXTVAL INTO :NEW.COD_OBJETO FROM DUAL;
+END;
+
+------------------------------------------//---------------------------------------------
+-- Secuencia para prestamo
+------------------------------------------//---------------------------------------------
+
+create sequence "SECUENCIA_PRESTAMO"
+start with 1
+increment by 1
+maxvalue 999999999
+minvalue 1
+nocache
+nocycle
+noorder
+
+------------------------------------------//---------------------------------------------
+-- Secuencia para prestamo
+------------------------------------------//---------------------------------------------
+
+CREATE SEQUENCE   "SECUENCIA_RESERVA"  MINVALUE 1 MAXVALUE 999999999 INCREMENT BY 1 START WITH 1 NOCACHE  NOORDER  NOCYCLE ;
+
+
+------------------------------------------//---------------------------------------------
+-- trigger para prestamo_insert
+------------------------------------------//---------------------------------------------
+
+create or replace TRIGGER  PRESTAMOInsert
+BEFORE INSERT ON PRESTAMO
+FOR EACH ROW
+BEGIN
+ SELECT SECUENCIA_PRESTAMO.NEXTVAL INTO :NEW.COD_PRESTAMO FROM DUAL;
+END;​
+
+
+------------------------------------------//---------------------------------------------
+-- trigger para estudiante_insert
+------------------------------------------//---------------------------------------------
+
+create or replace TRIGGER  EsutudianteInsert
+BEFORE INSERT ON ESTUDIANTE
+FOR EACH ROW
+BEGIN
+ SELECT SECUENCIA_ESTUDIANTE.NEXTVAL INTO :NEW.COD_ESTUDIANTE FROM DUAL;
+END;​
+
+------------------------------------------//---------------------------------------------
+-- trigger para reserva_insert
+------------------------------------------//---------------------------------------------
+
+create or replace TRIGGER  PRESTAMOInsert
+BEFORE INSERT ON PRESTAMO
+FOR EACH ROW
+BEGIN
+ SELECT SECUENCIA_PRESTAMO.NEXTVAL INTO :NEW.COD_PRESTAMO FROM DUAL;
+END;​
+
+------------------------------------------//---------------------------------------------
+-- trigger para prestador_insert
+------------------------------------------//---------------------------------------------
+
+create or replace TRIGGER  prestadorInsert
+BEFORE INSERT ON PRESTADOR
+FOR EACH ROW
+BEGIN
+ SELECT SECUENCIA_PRESTADOR.NEXTVAL INTO :NEW.COD_PRESTADOR FROM DUAL;
+END;​
