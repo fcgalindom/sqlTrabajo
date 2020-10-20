@@ -21,3 +21,18 @@ FROM
 WHERE
    PRESTAMO.cod_objeto = OBJETO.cod_objeto
    GROUP BY nom_objeto
+
+------------------------------------------//---------------------------------------------
+-- vista (cantidad de prestamos por estudiante)
+------------------------------------------//---------------------------------------------
+
+
+create  materialized view PRESTAMOXESTUDIANTE
+as
+SELECT
+  nom_estudiante, COUNT(cod_prestamo)
+FROM
+  ESTUDIANTE, PRESTAMO
+WHERE
+  ESTUDIANTE.cod_estudiante = PRESTAMO.cod_estudiante
+GROUP BY nom_estudiante;
