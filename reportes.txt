@@ -1,0 +1,14 @@
+--------------------------------------------//----------------------------------------------
+-- REPORTES PRESTAMO POR TIPO OBJETO
+--------------------------------------------//----------------------------------------------
+
+create  materialized view PRESTAMOXTXOBJETO
+as
+SELECT
+    nom_t_objeto, COUNT(cod_prestamo) as cantidad
+FROM
+   TIPO_OBJETO, PRESTAMO, OBJETO
+WHERE
+  TIPO_OBJETO.cod_t_objeto = OBJETO.cod_t_objeto AND
+  OBJETO.cod_objeto = PRESTAMO.cod_objeto
+  GROUP BY nom_t_objeto;
