@@ -24,3 +24,18 @@ FROM
    ESTUDIANTE, PRESTAMO
 WHERE
    ESTUDIANTE.cod_estudiante = PRESTAMO.cod_estudiante
+
+--------------------------------------------//----------------------------------------------
+-- REPORTES PRESTAMO POR CARRERA
+--------------------------------------------//----------------------------------------------
+
+create  materialized view PRESTAMO_CARRERA
+as
+SELECT
+   nom_carrera, COUNT(cod_prestamo)
+FROM
+   CARRERA, ESTUDIANTE, PRESTAMO
+WHERE
+   CARRERA.cod_carrera = ESTUDIANTE.cod_carrera AND
+   ESTUDIANTE.cod_estudiante = PRESTAMO.cod_estudiante
+   GROUP BY nom_carrera;
