@@ -12,3 +12,15 @@ WHERE
   TIPO_OBJETO.cod_t_objeto = OBJETO.cod_t_objeto AND
   OBJETO.cod_objeto = PRESTAMO.cod_objeto
   GROUP BY nom_t_objeto;
+
+--------------------------------------------//----------------------------------------------
+-- REPORTES POR FECHA POR ESTUDIANTE
+--------------------------------------------//----------------------------------------------
+
+create or replace view "FECHA_PRESTAMO_ESTUDIANTE" as
+SELECT
+   nom_estudiante, fecha_salida, hora_salida
+FROM
+   ESTUDIANTE, PRESTAMO
+WHERE
+   ESTUDIANTE.cod_estudiante = PRESTAMO.cod_estudiante
